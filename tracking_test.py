@@ -3,16 +3,31 @@ import numpy as np
 import cv2
 from cv2 import aruco
 import math
+import json
+
+def load_config(filename='config.json'):
+    try:
+        with open('config.json', 'r') as file:
+            data = json.load(file)
+        return data
+    except FileNotFoundError:
+        print(f"Error: The config file '{filename}' was not found.")
+        return {}
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON format in '{filename}': {e}.")
+        return {}
+
+config_file = load_config()
 
 # ---------------------- Configuration ----------------------
 aruco_dict = aruco.getPredefinedDictionary(aruco.DICT_4X4_50)
-marker_id = 23
-marker_length = 0.096            # meters
+marker_id = config_file["ARUCO_ID"]
+marker_length = config_file["ARUCO_LENGTH"]
 
 pipeline = rs.pipeline()
 config = rs.config()
-config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+config.enable_stream(rs.stream.color, config_file["RESOLUTION_X"], config_file["RESOLUTION_Y"], rs.format.bgr8, 30)
+config.enable_stream(rs.stream.depth, config_file["RESOLUTION_X"], config_file["RESOLUTION_Y"], rs.format.z16, 30)
 
 profile = pipeline.start(config)
 
