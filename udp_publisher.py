@@ -19,9 +19,9 @@ class UDPPublisher:
         """
         data = {
             "translation": {
-                "x": translation[0],
-                "y": translation[1],
-                "z": translation[2]
+                "x": translation[0]*100,
+                "y": translation[1]*100,
+                "z": translation[2]*100
             },
             "rotation_quat": {
                 "w": rotation_quat[0],
