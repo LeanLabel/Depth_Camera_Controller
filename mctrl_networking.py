@@ -1,4 +1,5 @@
 import socket
+import json
 
 class Coordinate():
 """simple coordinate class"""
@@ -58,11 +59,32 @@ class MctrlNet():
         # last position and orientation
         self.pos, self.ori = self.get_pos_ori()
 
+        # last packet id
+        self.seq = 1
+
     def get_pos_ori(self) -> (Coordinate, Quaternion):
-        pass
+
+        # TODO: return actual camera data
+        
+        return Coordinate(0, 0, 0), Quaternion(1, 0, 0, 0)
 
     def get_odom_msg(self) -> str:
-        pass
+        
+        odom_dict = {
+                "seq": self.seq,
+                "px": self.pos.x,
+                "py": self.pos.y,
+                "pz": self.pos.z,
+                "qw": self.ori.w,
+                "qx": self.ori.x,
+                "qy": self.ori.y,
+                "qz": self.ori.z
+                }
+
+        odom_pack = json.dumps(odom_dict)
+
+        return odom_pack
 
     def transfer_pos_ori(self):
         self.sckt.sendto(bytes(self.get_odom_msg(), "utf-8"), (self.udp_ip, self.tx_port))
+        self.seq += 1
