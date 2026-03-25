@@ -68,23 +68,23 @@ class MctrlNet():
         
         return Coordinate(0, 0, 0), Quaternion(1, 0, 0, 0)
 
-    def get_odom_msg(self) -> str:
+    def get_odom_msg(self, pos, ori) -> str:
         
         odom_dict = {
                 "seq": self.seq,
-                "px": self.pos.x,
-                "py": self.pos.y,
-                "pz": self.pos.z,
-                "qw": self.ori.w,
-                "qx": self.ori.x,
-                "qy": self.ori.y,
-                "qz": self.ori.z
+                "px": pos.x,
+                "py": pos.y,
+                "pz": pos.z,
+                "qw": ori.w,
+                "qx": ori.x,
+                "qy": ori.y,
+                "qz": ori.z
                 }
 
         odom_pack = json.dumps(odom_dict)
 
         return odom_pack
 
-    def transfer_pos_ori(self):
-        self.sckt.sendto(bytes(self.get_odom_msg(), "utf-8"), (self.udp_ip, self.tx_port))
+    def transfer_packet(self, data):
+        self.sckt.sendto(bytes(data, "utf-8"), (self.udp_ip, self.tx_port))
         self.seq += 1
