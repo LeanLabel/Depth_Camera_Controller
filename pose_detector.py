@@ -195,5 +195,11 @@ class PoseDetector:
                 q[3] = 0.25 * s
         return q   # [w, x, y, z]
 
+    def get_pose(self):
+        color_image, depth_frame = self.get_frames()
+        _, trans, quart = self.detect_pose(color_image, depth_frame)
+
+        return trans, quart
+
     def stop(self):
         self.pipeline.stop()
