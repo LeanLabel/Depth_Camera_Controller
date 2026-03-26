@@ -9,21 +9,23 @@ def main():
 
     try:
         while True:
-            color_image, depth_frame = detector.get_frames()
-            if color_image is None:
-                continue
+            print(detector.get_pose())
+        # while True:
+        #     color_image, depth_frame = detector.get_frames()
+        #     if color_image is None:
+        #         continue
 
-            success, t, q, annotated = detector.detect_pose(
-                color_image, depth_frame, return_annotated=True
-            )
+        #     success, t, q, annotated = detector.detect_pose(
+        #         color_image, depth_frame, return_annotated=True
+        #     )
 
-            if success:
-                publisher.send_pose(t, q)   # send only when pose is valid
+        #     if success:
+        #         publisher.send_pose(t, q)   # send only when pose is valid
                 
-            cv2.imshow('Pose Detection', annotated)
+        #     cv2.imshow('Pose Detection', annotated)
 
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+        #     if cv2.waitKey(1) & 0xFF == ord('q'):
+        #         break
     finally:
         detector.stop()
         # publisher.close()
