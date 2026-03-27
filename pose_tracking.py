@@ -22,7 +22,7 @@ class Poser():
         # get camera data
         pos, ori = self.cam_mod.get_pose()
         
-        if pos, ori != None, None:
+        if (pos, ori) != (None, None):
             pos, ori = Coordinate.from_tuple(pos), Quaternion.from_tuple(ori)
 
             # send packet

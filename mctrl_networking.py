@@ -2,7 +2,7 @@ import socket
 import json
 
 class Coordinate():
-"""simple coordinate class"""
+    """simple coordinate class"""
 
     def __init__(self, x, y, z):
 
@@ -16,13 +16,13 @@ class Coordinate():
         yield self.y
         yield self.z
 
-    @staticmethod
+    @classmethod
     def from_tuple(cls, coord):
 
         return cls(coord[0], coord[1], coord[2])
 
 class Quaternion():
-"""simple quaternion class"""
+    """simple quaternion class"""
 
     def __init__(self, w, x, y, z):
 
@@ -38,7 +38,7 @@ class Quaternion():
         yield y
         yield z
 
-    @staticmethod
+    @classmethod
     def from_tuple(cls, quat):
 
         return cls(quat[0], quat[1], quat[2], quat[3])
@@ -55,9 +55,6 @@ class MctrlNet():
         # connect udp socket
         self.sckt = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sckt.bind((self.udp_ip, self.rx_port))
-
-        # last position and orientation
-        self.pos, self.ori = self.get_pos_ori()
 
         # last packet id
         self.seq = 1
