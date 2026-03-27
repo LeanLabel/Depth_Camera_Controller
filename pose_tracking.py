@@ -7,7 +7,7 @@ import time
 
 class Poser():
 
-    def __init__(self, net_mod, cam_mod, rate):
+    def __init__(self, net_mod, cam_mod, rate, debug=False):
         
         self.net_mod = net_mod
         self.cam_mod = cam_mod
@@ -17,10 +17,15 @@ class Poser():
         self.init_time = None
         self.next_time = None
 
+        self.debug = debug
+
     def pose_tx_loop(self):
         
         # get camera data
         pos, ori = self.cam_mod.get_pose()
+
+        if self.debug:
+            print(pos, ori)
         
         if (pos, ori) != (None, None):
             pos, ori = Coordinate.from_tuple(pos), Quaternion.from_tuple(ori)
@@ -28,6 +33,9 @@ class Poser():
             # send packet
             pckt = self.net_mod.get_odom_msg(pos, ori)
             self.net_mod.transfer_packet(pckt)
+
+            if self.debug:
+                print(pckt)
 
         self.next_time += self.interval
 
@@ -53,6 +61,8 @@ class Poser():
 
 if __name__=="__main__":
     
+    debug = True
+
     # networking config
     udp_ip = "127.0.0.1"
     tx_port = 5005
@@ -64,7 +74,7 @@ if __name__=="__main__":
 
     # poser config
     rate = 30
-    poser = Poser(net_mod, cam_mod, rate)
+    poser = Poser(net_mod, cam_mod, rate, debug=debug)
 
     signal.signal(signal.SIGINT, poser.sig_int_handler)
 
