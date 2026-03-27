@@ -21,11 +21,13 @@ class Poser():
         
         # get camera data
         pos, ori = self.cam_mod.get_pose()
-        pos, ori = Coordinate.from_tuple(pos), Quaternion.from_tuple(ori)
+        
+        if pos, ori != None, None:
+            pos, ori = Coordinate.from_tuple(pos), Quaternion.from_tuple(ori)
 
-        # send packet
-        pckt = self.net_mod.get_odom_msg(pos, ori)
-        self.net_mod.transfer_packet(pckt)
+            # send packet
+            pckt = self.net_mod.get_odom_msg(pos, ori)
+            self.net_mod.transfer_packet(pckt)
 
         self.next_time += self.interval
 
