@@ -62,12 +62,6 @@ class MctrlNet():
         # last packet id
         self.seq = 1
 
-    def get_pos_ori(self) -> (Coordinate, Quaternion):
-
-        # TODO: return actual camera data
-        
-        return Coordinate(0, 0, 0), Quaternion(1, 0, 0, 0)
-
     def get_odom_msg(self, pos, ori) -> str:
         
         odom_dict = {
@@ -86,5 +80,10 @@ class MctrlNet():
         return odom_pack
 
     def transfer_packet(self, data):
+
         self.sckt.sendto(bytes(data, "utf-8"), (self.udp_ip, self.tx_port))
         self.seq += 1
+
+    def end_connection(self):
+
+        self.sckt.close()

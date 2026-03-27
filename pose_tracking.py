@@ -1,5 +1,8 @@
-from mctrl_networking import MctrlNet
+from mctrl_networking import MctrlNet, Coordinate, Quaternion
+from pose_detector import PoseDetector
+
 import sched
+import signal, sys
 import time
 
 class Poser():
@@ -17,7 +20,8 @@ class Poser():
     def pose_tx_loop(self):
         
         # get camera data
-        pos, ori = None, None # TODO
+        pos, ori = self.cam_mod.get_pose()
+        pos, ori = Coordinate.from_tuple(pos), Quaternion.from_tuple(ori)
 
         # send packet
         pckt = self.net_mod.get_odom_msg(pos, ori)
@@ -36,6 +40,14 @@ class Poser():
 
         self.scheduler.run()
 
+    def sig_int_handler(self, sig, frame):
+
+        print(f"stopped process from {self.init_time}")
+        print(f"sent {self.net_mod.seq} packets")
+
+        self.net_mod.end_connection()
+        sys.exit(0)
+
 
 if __name__=="__main__":
     
@@ -46,7 +58,12 @@ if __name__=="__main__":
     net_mod = MctrlNet(udp_ip, tx_port, rx_port)
 
     # camera config
+    cam_mod = PoseDetector()
 
     # poser config
     rate = 30
     poser = Poser(net_mod, cam_mod, rate)
+
+    signal.signal(signal.SIGINT, poser.sig_int_handler)
+
+    poser.pose_tx_start()
