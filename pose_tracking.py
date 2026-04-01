@@ -43,7 +43,7 @@ class Poser():
 
     def pose_tx_start(self):
 
-        self.init_time = (time.time() // self.interval + 1) * interval
+        self.init_time = (time.time() // self.interval + 1) * self.interval
         self.next_time = self.init_time
 
         self.scheduler.enterabs(self.init_time, 1, self.pose_tx_loop)

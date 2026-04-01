@@ -1,9 +1,9 @@
 {
-  "RESOLUTION_X": 640,
-  "RESOLUTION_Y": 480,
+  "RESOLUTION_X": 1280,
+  "RESOLUTION_Y": 720,
 
   "ARUCO_ID": 23,       
-  "ARUCO_LENGTH": 0.096, 
+  "ARUCO_LENGTH": 0.05, 
 
   "NETWORK_HOST": "localhost",
   "NETWORK_PORT": 5432,
