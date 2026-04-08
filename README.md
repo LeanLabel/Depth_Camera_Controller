@@ -9,13 +9,13 @@ To construct and operate the controller, the following code is provided:
  - `Joystick_Control_Test.ino` is used to flash the controller's ESP32
  - The remaining files contain necessary supporting code to ensure the controller and camera function
 
-This controller was designed to run in tandem with the XR simulation [here]().
+This controller was designed to run in tandem with the XR simulation [here](https://github.com/EMKwasam/SUTD-Capstone-VR-Simulation).
 
 ## Prerequisites
 
  - [Arduino IDE](https://www.arduino.cc/en/software/)
  - [Python 3](https://www.python.org/downloads/) (Tested on 3.9+)
- - Materials for 1 MicroKiap:tm: XR Controller
+ - Materials for 1 MicroKiap&trade; XR Controller
  - An Intel Realsense D405 Depth Camera
 
 ## Setup instructions
