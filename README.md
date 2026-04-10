@@ -6,7 +6,7 @@ To construct and operate the controller, the following code is provided:
 
  - `generate_marker.py` generates an Aruco marker used to track the movement of the controller
  - `pose_tracking.py` runs the main camera loop to track the position of the controller
- - `Joystick_Control_Test.ino` is used to flash the controller's ESP32
+ - `Clicks-His-Buttons.ino` is used to flash the controller's ESP32
  - The remaining files contain necessary supporting code to ensure the controller and camera function
 
 This controller was designed to run in tandem with the XR simulation [here](https://github.com/EMKwasam/SUTD-Capstone-VR-Simulation).
@@ -22,10 +22,10 @@ This controller was designed to run in tandem with the XR simulation [here](http
 
  1. Construct a controller using the provided schematics
  1. Clone this repository
- 1. Flash the ESP32 with `Joystick_Control_Test.ino` using Arduino IDE
+ 1. Flash the ESP32 with `Clicks-His-Buttons.ino` using Arduino IDE
     1. Within Arduino IDE, install Espressif System's `esp32` from the board manager
     1. Still in Arduino IDE, install lemmingDev's `ESP32-BLE-Gamepad` from the library manager
-    1. Open `Joystick_Control_Test.ino`
+    1. Open `Clicks-His-Buttons.ino`
     1. Connect to the controller's ESP32 board and select the matching board and port
     1. Flash the code onto the ESP32
  1. In a command terminal, navigate to the directory containing this repository
